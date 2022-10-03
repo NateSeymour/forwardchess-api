@@ -1,0 +1,156 @@
+_id: spc_cbbaabf3b24543419f3eeb62721a0eef
+type: ApiSpec
+parentId: wrk_292ff1c9442240bfb57b63a36a3697bc
+modified: 1664818222318
+created: 1664817509344
+fileName: forwardchess
+contents: "openapi: 3.0.3
+
+  info:
+
+  \  title: ForwardChess API
+
+  \  version: 0.0.1
+
+  servers:
+
+  \  - url: 'https://api-v1.forwardchess.com/'
+
+  paths:
+
+  \  /accounts/login:
+
+  \    post:
+
+  \      requestBody:
+
+  \        $ref: '#/components/requestBodies/Credentials'
+
+  \      responses:
+
+  \        '200':
+
+  \          $ref: '#/components/responses/LoginResponse'
+
+  components:
+
+  \  responses:
+
+  \    LoginResponse:
+
+  \      description: 'Login response'
+
+  \      content:
+
+  \        'application/json':
+
+  \          schema:
+
+  \            $ref: '#/components/schemas/LoginResponse'
+
+  \  requestBodies:
+
+  \    Credentials:
+
+  \      content:\ 
+
+  \        'application/json':
+
+  \          schema:
+
+  \            $ref: '#/components/schemas/Credentials'
+
+  \  schemas:
+
+  \    Credentials:
+
+  \      type: object
+
+  \      properties:
+
+  \        email:\ 
+
+  \          type: string
+
+  \        password:\ 
+
+  \          type: string
+
+  \        deviceId:\ 
+
+  \          type: string
+
+  \    Account:
+
+  \      type: object
+
+  \      properties:
+
+  \        email:
+
+  \          type: string
+
+  \        password:
+
+  \          type: string
+
+  \        firstName:
+
+  \          type: string
+
+  \        lastName:
+
+  \          type: string
+
+  \        emailValidated:
+
+  \          type: boolean
+
+  \        author:
+
+  \          type: boolean
+
+  \        created:
+
+  \          type: integer
+
+  \        updated:
+
+  \          type: integer
+
+  \        status:
+
+  \          type: string
+
+  \        deviceId:
+
+  \          type: string
+
+  \        maxEnabledDevices:
+
+  \          type: integer
+
+  \        mobile:
+
+  \          type: string
+
+  \    LoginResponse:
+
+  \      type: object
+
+  \      properties:
+
+  \        account:
+
+  \          $ref: '#/components/schemas/Account'
+
+  \        purchases:
+
+  \          type: array
+
+  \        deviceEnabled:
+
+  \          type: boolean
+
+  \      "
+contentType: yaml
