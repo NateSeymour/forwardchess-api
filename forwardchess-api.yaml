@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: ForwardChess API
+  version: 0.0.1
+servers:
+  - url: 'https://api-v1.forwardchess.com/'
+paths:
+  /accounts/login:
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/Credentials'
+      responses:
+        '200':
+          $ref: '#/components/responses/LoginResponse'
+components:
+  responses:
+    LoginResponse:
+      description: 'Login response'
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/LoginResponse'
+  requestBodies:
+    Credentials:
+      content: 
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/Credentials'
+  schemas:
+    Credentials:
+      type: object
+      properties:
+        email: 
+          type: string
+        password: 
+          type: string
+        deviceId: 
+          type: string
+    Account:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        emailValidated:
+          type: boolean
+        author:
+          type: boolean
+        created:
+          type: integer
+        updated:
+          type: integer
+        status:
+          type: string
+        deviceId:
+          type: string
+        maxEnabledDevices:
+          type: integer
+        mobile:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/Account'
+        purchases:
+          type: array
+        deviceEnabled:
+          type: boolean
+      
