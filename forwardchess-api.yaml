@@ -70,6 +70,8 @@ components:
           $ref: '#/components/schemas/Account'
         purchases:
           type: array
+          items:
+            type: string
         deviceEnabled:
           type: boolean
       
