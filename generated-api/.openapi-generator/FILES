@@ -1,0 +1,12 @@
+.openapi-generator-ignore
+apis/AccountApi.ts
+apis/BookApi.ts
+apis/index.ts
+index.ts
+models/Account.ts
+models/Credentials.ts
+models/LoginResponse.ts
+models/ResetPasswordRequest.ts
+models/UpdateAccountByEmailRequest.ts
+models/index.ts
+runtime.ts

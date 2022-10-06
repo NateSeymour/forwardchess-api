@@ -1,13 +1,15 @@
 openapi: 3.0.3
 info:
   title: ForwardChess API
-  version: 0.0.2
+  version: 0.0.3
 servers:
   - url: 'https://api-v1.forwardchess.com/'
 paths:
 ### ACCOUNTS SERVICE
   /accounts/login:
     post:
+      tags:
+        - Account
       operationId: login
       requestBody:
         $ref: '#/components/requestBodies/Credentials'
@@ -30,6 +32,8 @@ paths:
                     type: boolean
   /api/accounts/{email}:
     get:
+      tags:
+        - Account
       operationId: getAccountByEmail
       description: 'Get account by email address'
       parameters:
@@ -39,6 +43,8 @@ paths:
         '200':
           $ref: '#/components/responses/Account'
     post:
+      tags:
+        - Account
       operationId: updateAccountByEmail
       description: 'Update account by email address'
       parameters:
@@ -61,6 +67,8 @@ paths:
           $ref: '#/components/responses/Account'
   /api/accounts/reset-password:
     post:
+      tags:
+        - Account
       operationId: resetPassword
       requestBody:
         content:
@@ -77,6 +85,8 @@ paths:
           $ref: '#/components/responses/Empty'
   /api/accounts/confirm/{email}:
     get:
+      tags:
+        - Account
       operationId: sendEmailConfirmation
       description: 'Send account confirmation email'
       parameters:
@@ -86,6 +96,8 @@ paths:
           $ref: '#/components/responses/Empty'
   /accounts/{email}/purchases:
     get:
+      tags:
+        - Account
       operationId: getPurchases
       description: 'Get list of purchases'
       parameters:
@@ -108,6 +120,8 @@ paths:
 ###BOOK SERVICE
   /books/{bookId}/list:
     get:
+      tags:
+        - Book
       operationId: getBookFileList
       parameters:
         - name: bookId
@@ -132,6 +146,8 @@ paths:
                   type: string
   /gcs/forwardchess-books/{bookId}/{file}:
     get:
+      tags:
+        - Book
       operationId: getBookFile
       responses:
         '200':
