@@ -1,25 +1,192 @@
 openapi: 3.0.3
 info:
   title: ForwardChess API
-  version: 0.0.1
+  version: 0.0.2
 servers:
   - url: 'https://api-v1.forwardchess.com/'
 paths:
+### ACCOUNTS SERVICE
   /accounts/login:
     post:
+      operationId: login
       requestBody:
         $ref: '#/components/requestBodies/Credentials'
       responses:
         '200':
-          $ref: '#/components/responses/LoginResponse'
+          description: 'Login response'
+          content:
+            'application/json':
+              schema:
+                title: LoginResponse
+                type: object
+                properties:
+                  account:
+                    $ref: '#/components/schemas/Account'
+                  purchases:
+                    type: array
+                    items:
+                      type: string
+                  deviceEnabled:
+                    type: boolean
+  /api/accounts/{email}:
+    get:
+      operationId: getAccountByEmail
+      description: 'Get account by email address'
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        '200':
+          $ref: '#/components/responses/Account'
+    post:
+      operationId: updateAccountByEmail
+      description: 'Update account by email address'
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+        - $ref: '#/components/parameters/Authorization'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Account'
+  /api/accounts/reset-password:
+    post:
+      operationId: resetPassword
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                email: 
+                  type: string
+                deviceId: 
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Empty'
+  /api/accounts/confirm/{email}:
+    get:
+      operationId: sendEmailConfirmation
+      description: 'Send account confirmation email'
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/Empty'
+  /accounts/{email}/purchases:
+    get:
+      operationId: getPurchases
+      description: 'Get list of purchases'
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+        - $ref: '#/components/parameters/Authorization'
+        - name: deviceId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'String list of purchased book IDs'
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  type: string
+
+###BOOK SERVICE
+  /books/{bookId}/list:
+    get:
+      operationId: getBookFileList
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sample
+          in: query
+          required: false
+          schema: 
+            type: boolean
+      responses:
+        '200':
+          description: 'Array of book files'
+          content:
+            'application/json':
+              schema:
+                title: BookList
+                type: array
+                items:
+                  type: string
+  /gcs/forwardchess-books/{bookId}/{file}:
+    get:
+      operationId: getBookFile
+      responses:
+        '200':
+          description: 'Book HTML content'
+          content:
+            'text/html':
+              schema:
+                title: BookHtmlContent
+                type: string
+    parameters:
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: file
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: t
+        description: Token provided by /accounts/login
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: d
+        description: Device ID
+        in: query
+        required: true
+        schema:
+          type: string
 components:
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+    EmailPath:
+      name: email
+      in: path
+      required: true
+      schema:
+        type: string
   responses:
-    LoginResponse:
-      description: 'Login response'
+    Account:
+      description: 'Account response'
       content:
         'application/json':
           schema:
-            $ref: '#/components/schemas/LoginResponse'
+            $ref: '#/components/schemas/Account'
+    Empty:
+      description: 'Empty Response'
   requestBodies:
     Credentials:
       content: 
@@ -29,6 +196,10 @@ components:
   schemas:
     Credentials:
       type: object
+      required:
+        - email
+        - password
+        - deviceId 
       properties:
         email: 
           type: string
@@ -63,15 +234,4 @@ components:
           type: integer
         mobile:
           type: string
-    LoginResponse:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/Account'
-        purchases:
-          type: array
-          items:
-            type: string
-        deviceEnabled:
-          type: boolean
       
