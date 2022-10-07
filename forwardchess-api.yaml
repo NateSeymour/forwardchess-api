@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: ForwardChess API
-  version: 0.0.3
+  version: 0.0.4
 servers:
   - url: 'https://api-v1.forwardchess.com/'
 paths:
@@ -180,6 +180,63 @@ paths:
         required: true
         schema:
           type: string
+  /books/{bookId}:
+    get:
+      tags:
+        - Book
+      operationId: getBookSimple
+      parameters:
+        - name: bookId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Book information'
+          content:
+            'application/json':
+              schema: 
+                $ref: '#/components/schemas/Book'
+  /api/books/validation/{email}:
+    post:
+      tags:
+        - Book
+      operationId: getBook
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                bookId:
+                  type: string
+                credentials:
+                  type: string
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        '200':
+          description: 'Full book information'
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Book'
+  /api/books/all:
+    get:
+      tags:
+        - Book
+      operationId: getAllBooks
+      responses:
+        '200':
+          description: 'Get all books'
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
 components:
   parameters:
     Authorization:
@@ -210,6 +267,79 @@ components:
           schema:
             $ref: '#/components/schemas/Credentials'
   schemas:
+    Book:
+      type: object
+      required:
+        - id
+        - puzzle
+        - learning
+        - created
+        - publisher
+        - author
+        - dateUploaded
+        - title
+        - bookDetailsURL
+        - path
+        - icon
+        - freePath
+        - sample
+        - bestSeller
+        - rating
+        - reviews
+        - iapBookId
+        - status
+      properties:
+        id:
+          type: string
+        puzzle:
+          type: boolean
+        learning:
+          type: boolean
+        created:
+          type: integer
+        publisher:
+          type: string
+        author:
+          type: string
+        dateUploaded:
+          type: string
+        title:
+          type: string
+        bookDetailsURL:
+          type: string
+        path:
+          type: string
+        icon:
+          type: string
+        freePath:
+          type: string
+        sample:
+          type: boolean
+        bestSeller:
+          type: boolean
+        rating:
+          type: integer
+        reviews:
+          type: integer
+        iapBookId:
+          type: string
+        status:
+          type: string
+        password:
+          type: string
+        url:
+          type: string
+        categories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              position:
+                type: integer
     Credentials:
       type: object
       required:

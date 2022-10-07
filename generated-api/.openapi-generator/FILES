@@ -4,7 +4,10 @@ apis/BookApi.ts
 apis/index.ts
 index.ts
 models/Account.ts
+models/Book.ts
+models/BookCategoriesInner.ts
 models/Credentials.ts
+models/GetBookRequest.ts
 models/LoginResponse.ts
 models/ResetPasswordRequest.ts
 models/UpdateAccountByEmailRequest.ts

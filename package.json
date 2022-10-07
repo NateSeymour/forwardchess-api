@@ -1,10 +1,10 @@
 {
   "name": "forwardchess-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Auto generated fetch+ts api for forwardchess",
   "main": "generated-api/index.ts",
   "scripts": {
-    "build": "openapi-generator-cli generate -g typescript-fetch -i forwardchess-api.yaml -o generated-api"
+    "build": "rm -rf generated-api && openapi-generator-cli generate -g typescript-fetch -i forwardchess-api.yaml -o generated-api"
   },
   "repository": {
     "type": "git",
