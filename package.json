@@ -1,6 +1,6 @@
 {
   "name": "forwardchess-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Auto generated fetch+ts api for forwardchess",
   "main": "generated-api/index.ts",
   "scripts": {
